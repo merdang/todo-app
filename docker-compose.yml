@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  todo-db:
+    container_name: todo-db
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: todopass
+      POSTGRES_DB: postgres
+    
+    volumes:
+      - pgdata:/var/lib/data
+    restart: always
+  
+  todo-app:
+    container_name: todo-app
+    depends_on:
+      - todo-db
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: "host=todo-db user=postgres dbname=postgres password=todopass sslmode=disable"
+    restart: always
+
+volumes:
+  pgdata: {}
