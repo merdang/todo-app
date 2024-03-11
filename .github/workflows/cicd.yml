@@ -49,7 +49,7 @@ jobs:
           helm repo update
 
       - name: Deploy PostgreSQL
-        run: helm install prometheus prometheus-community/kube-prometheus-stack
+        run: helm install prometheus prometheus-community/kube-prometheus-stack --kube-config ~/.kube/config
   
   deploy-helm-chart:
     runs-on: ubuntu-latest
