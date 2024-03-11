@@ -1,4 +1,4 @@
-name: Makefile CI
+name: Deploy Application
 
 on:
   push:
@@ -39,7 +39,9 @@ jobs:
           version: 'v3.14.2'
 
       - name: Add Helm repository
-        run: helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+        run: |
+          helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+          helm repo update
 
       - name: Deploy PostgreSQL
         run: helm install prometheus prometheus-community/kube-prometheus-stack
