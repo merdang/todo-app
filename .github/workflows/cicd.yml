@@ -27,6 +27,7 @@ jobs:
         run: |
           kind create cluster --kubeconfig ${HOME}/.kube/config
           kubectl config view
+          export $KUBECONFIG=${HOME}/.kube/config
 
   deploy-prometheus: # needed for charts deployment
     runs-on: ubuntu-latest
