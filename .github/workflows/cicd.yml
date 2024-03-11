@@ -22,12 +22,11 @@ jobs:
           chmod +x ./kind
           sudo mv ./kind /usr/local/bin/kind
           kind version
-          kubectl config view
 
       - name: Create KinD cluster
         run: |
           kind create cluster
-          kubectl config view
+          kubectl config use-context kind-kind
 
   deploy-prometheus: # needed for charts deployment
     runs-on: ubuntu-latest
