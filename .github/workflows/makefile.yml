@@ -7,15 +7,48 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
+  create-cluster:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
+      - name: Install kubectl
+        uses: azure/k8s-set-context@v1
+        with:
+          install-kubectl: true
 
-    - name: build the app
-      run: make build
+      - name: Install KinD
+        run: |
+          [ $(uname -m) = x86_64 ] && curl -Lo kind https://kind.sigs.k8s.io/dl/v0.11.1/kind-linux-amd64
+          chmod +x ./kind
+          sudo mv ./kind /usr/local/bin/kind
+          kind version
 
-    - name: Run
-      run: make run
+      - name: Create KinD cluster
+        run: kind create cluster
+
+  deploy-prometheus: # needed for charts deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: 'v3.14.2'
+
+      - name: Add Helm repository
+        run: helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+
+      - name: Deploy PostgreSQL
+        run: helm install prometheus prometheus-community/kube-prometheus-stack
+  
+  deploy-helm-chart:
+    runs-on: ubuntu-latest
+    needs: deploy-prometheus
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Deploy Helm Chart
+        run: |
+          helm install todo-app ./charts/todo-app
