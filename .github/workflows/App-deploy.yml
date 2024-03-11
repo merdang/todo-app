@@ -59,5 +59,7 @@ jobs:
       
       - name: Deploy Helm Chart
         run: |
-          helm install todo-app https://merdang.github.io/todo-app
+          helm repo add todo-app https://merdang.github.io/todo-app
+          helm repo update
+          helm install todo-app todo-app/todo-app
 
