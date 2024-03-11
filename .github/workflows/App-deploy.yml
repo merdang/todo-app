@@ -31,9 +31,8 @@ jobs:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
 
-  DeployApplication:
+  BuildandRun:
     runs-on: ubuntu-latest
-    needs: release-chart
     steps:
       - name: Install kubectl
         uses: azure/setup-kubectl@v3
