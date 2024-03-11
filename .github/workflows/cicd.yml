@@ -27,6 +27,7 @@ jobs:
         run: |
           kind create cluster
           kubectl config use-context kind-kind
+          kubectl config view
 
   deploy-prometheus: # needed for charts deployment
     runs-on: ubuntu-latest
