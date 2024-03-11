@@ -1,0 +1,18 @@
+namespace: default
+
+app:
+  port: 3000
+
+image:
+  repository: merdang/todo-app
+  tag: latest
+
+postgresql:
+  enabled: true
+  postgresqlUsername: postgres
+  postgresqlPassword: todopass
+  postgresqlDatabase: postgres
+  disableSSL: true
+
+ingress:
+  enabled: true

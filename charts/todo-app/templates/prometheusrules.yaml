@@ -1,0 +1,28 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: todo-app
+spec:
+  groups:
+    - name: todo-app-rules
+      rules:
+        - alert: HighRequestRate
+          expr: sum(rate(http_requests_total[1m])) > 1000
+          for: 1m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High request rate detected"
+            description: "More than 1000 HTTP requests per second detected in the last minute."
+
+        - alert: HighResponseTime
+          expr: histogram_quantile(0.7, sum(rate(http_request_duration_seconds[1m])) by (le)) > 1
+          for: 1m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High response time detected"
+            description: "70 percentile response time exceeded 1 second in the last minute."

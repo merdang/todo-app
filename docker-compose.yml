@@ -18,6 +18,7 @@ services:
   
   todo-app:
     container_name: todo-app
+    image: merdang/todo-app
     depends_on:
       - todo-db
     build: .

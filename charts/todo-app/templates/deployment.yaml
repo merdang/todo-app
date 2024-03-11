@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: todo-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: todo-app
+  template:
+    metadata:
+      labels:
+        app: todo-app
+    spec:
+      containers:
+        - name: todo-app
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          ports:
+            - containerPort: {{ .Values.app.port }}
+          env:
+            - name: DATABASE_URL
+              value: "host=todo-db user={{ .Values.postgresql.postgresqlUsername }} password={{ .Values.postgresql.postgresqlPassword }} dbname={{ .Values.postgresql.postgresqlDatabase }} sslmode=disable"
+#              value: "{{ .Release.Name }}-postgresql://{{ .Values.postgresql.postgresqlUsername }}:{{ .Values.postgresql.postgresqlPassword }}@postgresql:5432/{{ .Values.postgresql.postgresqlDatabase }}{{ if .Values.postgresql.disableSSL }}?sslmode=disable{{ end }}"

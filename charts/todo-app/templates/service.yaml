@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: todo-app
+spec:
+  selector:
+    app: todo-app
+  ports:
+    - name: app-port
+      port: {{ .Values.app.port }}
+      targetPort: {{ .Values.app.port }}
