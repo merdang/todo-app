@@ -22,11 +22,11 @@ jobs:
           chmod +x ./kind
           sudo mv ./kind /usr/local/bin/kind
           kind version
-          kubeadm init
 
       - name: Create KinD cluster
         run: |
           kind create cluster --kubeconfig ${HOME}/.kube/config
+          export KUBECONFIG=${HOME}/.kube/config
           kubectl config view
           
 
