@@ -7,9 +7,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-  runs-on: ubuntu-latest
-
-  create-cluster:
+  DeployApplication:
+    runs-on: ubuntu-latest
     steps:
       - name: Install kubectl
         uses: azure/setup-kubectl@v3
@@ -40,34 +39,7 @@ jobs:
 
       - name: Deploy Prometheus
         run: helm install prometheus prometheus-community/kube-prometheus-stack
-          
-
-  # deploy-prometheus: # needed for charts deployment
-  #   runs-on: ubuntu-latest
-  #   needs: create-cluster
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v2
-
-  #     - name: Install Helm
-  #       uses: azure/setup-helm@v1
-  #       with:
-  #         version: 'v3.14.2'
-
-  #     - name: Add Helm repository
-  #       run: |
-  #         helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-  #         helm repo update
-
-  #     - name: Deploy Prometheus
-  #       run: helm install prometheus prometheus-community/kube-prometheus-stack
-  
-  deploy-helm-chart:
-    needs: create-cluster
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
+      
       - name: Deploy Helm Chart
         run: |
           helm install todo-app ./charts/todo-app
