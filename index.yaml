@@ -1,0 +1,12 @@
+apiVersion: v1
+entries:
+  todo-app:
+  - apiVersion: v2
+    created: "2024-03-11T08:27:28.182226827Z"
+    description: A Helm chart for deploying the todo-app
+    digest: 1d316be0dbfac90f6df3d8696de4ebbf7d3e9cd54f1033da501161e700139cd8
+    name: todo-app
+    urls:
+    - https://github.com/merdang/todo-app/releases/download/todo-app-0.1.0/todo-app-0.1.0.tgz
+    version: 0.1.0
+generated: "2024-03-11T08:27:28.182231386Z"
