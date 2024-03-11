@@ -26,6 +26,7 @@ jobs:
 
       - name: Create KinD cluster
         run: kind create cluster
+        run: kubectl config view
 
   deploy-prometheus: # needed for charts deployment
     runs-on: ubuntu-latest
