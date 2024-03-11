@@ -25,7 +25,7 @@ jobs:
 
       - name: Create KinD cluster
         run: |
-          kind create cluster --kubeconfig
+          kind create cluster --kubeconfig ${HOME}/.kube/config
           kubectl config use-context kind-kind
           kubectl config view
 
