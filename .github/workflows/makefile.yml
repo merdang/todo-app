@@ -11,9 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install kubectl
-        uses: azure/k8s-set-context@v1
+        uses: azure/setup-kubectl@v3
         with:
-          install-kubectl: true
+          version: 1.29
+        id: install
 
       - name: Install KinD
         run: |
