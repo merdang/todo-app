@@ -22,7 +22,7 @@ jobs:
           chmod +x ./kind
           sudo mv ./kind /usr/local/bin/kind
           kind version
-          kubectl version
+          kubectl config view
 
       - name: Create KinD cluster
         run: kind create cluster
