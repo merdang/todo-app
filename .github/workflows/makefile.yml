@@ -28,6 +28,7 @@ jobs:
 
   deploy-prometheus: # needed for charts deployment
     runs-on: ubuntu-latest
+    needs: create-cluster
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
