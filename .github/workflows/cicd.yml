@@ -26,7 +26,7 @@ jobs:
       - name: Create KinD cluster
         run: |
           kind create cluster --name cluster
-          echo $KUBECONFIG
+          echo " < $KUBECONFIG > "
           echo -------
           kubectl config view
           
@@ -47,9 +47,11 @@ jobs:
         run: |
           helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
           helm repo update
+          kubectl config get-contexts
+          kubectl config use-context cluster-kind
 
       - name: Deploy Prometheus
-        run: helm install prometheus prometheus-community/kube-prometheus-stack --kube-config ~/.kube/config
+        run: helm install prometheus prometheus-community/kube-prometheus-stack
   
   deploy-helm-chart:
     runs-on: ubuntu-latest
