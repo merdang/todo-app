@@ -25,8 +25,10 @@ jobs:
 
       - name: Create KinD cluster
         run: |
-          kind create cluster --kubeconfig ${HOME}/.kube/config
-          export KUBECONFIG=${HOME}/.kube/config
+          kind create cluster --name cluster
+          echo -------
+          cat ~/.kube/config
+          echo -------
           kubectl config view
           
 
@@ -44,11 +46,10 @@ jobs:
 
       - name: Add Helm repository
         run: |
-          export KUBECONFIG=${HOME}/.kube/config
           helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
           helm repo update
 
-      - name: Deploy PostgreSQL
+      - name: Deploy Prometheus
         run: helm install prometheus prometheus-community/kube-prometheus-stack --kube-config ~/.kube/config
   
   deploy-helm-chart:
